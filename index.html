@@ -5,46 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tappunk</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             background-color: #000;
             color: #ffb000;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
+            min-height: 100vh;
+            padding: 2rem;
         }
-        h1 {
-            font-size: 2rem;
+
+        .terminal {
+            max-width: 680px;
+            width: 100%;
+        }
+
+        .prompt {
+            color: #ffb000;
+            margin-bottom: 1.5rem;
+        }
+
+        .prompt .user {
+            color: #ffb000;
+        }
+
+        .prompt .separator {
+            color: #ffb000;
+        }
+
+        .prompt .path {
+            color: #ffb000;
+        }
+
+        .prompt .symbol {
+            color: #ffb000;
+        }
+
+        .line {
+            margin-bottom: 0.25rem;
+            line-height: 1.6;
+        }
+
+        .header-line {
             margin-bottom: 2rem;
-            letter-spacing: 0.2rem;
-            text-transform: lowercase;
         }
-        nav a {
+
+        a {
             color: #ffb000;
             text-decoration: none;
-            margin: 5px 10px;
-            border: 1px solid #ffb000;
-            padding: 8px 16px;
-            transition: all 0.3s ease;
-            display: inline-block;
+            border-bottom: 1px dotted #ffb000;
         }
-        nav a:hover {
+
+        a:hover {
             background-color: #ffb000;
             color: #000;
+            border-bottom: 1px solid #ffb000;
+        }
+
+        .project-name {
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b7500;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: #ffb000;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <h1>tappunk</h1>
-    <nav>
-        <a href="https://github.com/tappunk/muthr">muthr</a>
-        <a href="https://github.com/tappunk/dotfiles">dotfiles</a>
-        <a href="https://github.com/tappunk">github</a>
-        <a href="https://x.com/tappunk">x</a>
-    </nav>
+    <div class="terminal">
+        <div class="line header-line">
+            <span class="comment"># tappunk — local ai, zero trust</span>
+        </div>
+
+        <div class="line">
+            <span class="prompt">
+                <span class="user">tappunk@host</span><span class="separator">:</span><span class="path">~/projects</span><span class="symbol">$</span>
+            </span>
+            <span>ls -1 projects/</span>
+        </div>
+
+        <div class="line" style="margin: 0.75rem 0;">
+            <a href="https://github.com/tappunk/muthr" class="project-name">muthr</a>
+            <span>&nbsp;&nbsp; zero-trust orchestrator — llama.cpp + lima</span>
+        </div>
+        <div class="line">
+            <a href="https://github.com/tappunk/muthr-configs" class="project-name">muthr-configs</a>
+            <span>&nbsp;&nbsp; lima templates, model presets, provisioning scripts</span>
+        </div>
+        <div class="line">
+            <a href="https://github.com/tappunk/dotfiles" class="project-name">dotfiles</a>
+            <span>&nbsp;&nbsp; hardened macos workstation — ghostty, nvim, nix</span>
+        </div>
+
+        <div class="line" style="margin: 1.5rem 0 0.75rem;">
+            <span class="comment"># social</span>
+        </div>
+
+        <div class="line">
+            <a href="https://x.com/tappunk">@tappunk</a>
+            <span>&nbsp;&nbsp; x / twitter</span>
+        </div>
+        <div class="line">
+            <a href="https://github.com/tappunk">github.com/tappunk</a>
+            <span>&nbsp;&nbsp; source</span>
+        </div>
+
+        <div class="line" style="margin-top: 2rem;">
+            <span class="prompt">
+                <span class="user">tappunk@host</span><span class="separator">:</span><span class="path">~/projects</span><span class="symbol">$</span>
+            </span>
+            <span class="cursor"></span>
+        </div>
+    </div>
 </body>
 </html>
