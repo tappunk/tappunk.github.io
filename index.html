@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tappunk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --bg-soft: #10141a;
+      --panel: #12171f;
+      --line: #293140;
+      --text: #d7dfeb;
+      --muted: #93a0b8;
+      --accent: #7ee787;
+      --accent-2: #6cb6ff;
+      --max: 980px;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "IBM Plex Mono", monospace;
+      background:
+        radial-gradient(1100px 680px at 10% -15%, rgba(108, 182, 255, 0.12), transparent 60%),
+        radial-gradient(1100px 680px at 95% 0%, rgba(126, 231, 135, 0.08), transparent 55%),
+        var(--bg);
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(circle at 50% 40%, #000 30%, transparent 100%);
+    }
+
+    main {
+      width: min(var(--max), 100% - 2rem);
+      margin: 2rem auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+      overflow: hidden;
+      animation: rise 500ms ease-out both;
+    }
+
+    .top {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.86rem;
+      background: rgba(14, 18, 24, 0.8);
+    }
+
+    .shell {
+      padding: 1.1rem 1rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--accent);
+      overflow-x: auto;
+      white-space: nowrap;
+      animation: rise 560ms ease-out both;
+    }
+
+    .hero {
+      padding: 1.3rem 1rem 1.5rem;
+      border-bottom: 1px solid var(--line);
+      animation: rise 620ms ease-out both;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(1.7rem, 4.7vw, 2.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      max-width: 18ch;
+    }
+
+    .lead {
+      margin: 0.95rem 0 0;
+      color: var(--muted);
+      max-width: 64ch;
+      line-height: 1.7;
+    }
+
+    .tags {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.34rem 0.62rem;
+      color: var(--muted);
+      font-size: 0.81rem;
+      background: var(--bg-soft);
+    }
+
+    .section {
+      padding: 1rem;
+      border-bottom: 1px solid var(--line);
+      animation: rise 680ms ease-out both;
+    }
+
+    .section:last-child { border-bottom: 0; animation-duration: 740ms; }
+
+    .kicker {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      margin: 0 0 0.8rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+    }
+
+    .card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 0.85rem;
+      transition: border-color 180ms ease, transform 180ms ease, background-color 180ms ease;
+    }
+
+    .card:hover {
+      border-color: var(--accent-2);
+      transform: translateY(-1px);
+      background: #17202b;
+    }
+
+    .title {
+      font-weight: 700;
+      color: #ecf2fc;
+    }
+
+    .desc {
+      margin-top: 0.4rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .mini {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.45rem;
+    }
+
+    .mini a {
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: var(--bg-soft);
+      border-radius: 10px;
+      padding: 0.62rem 0.7rem;
+      transition: border-color 180ms ease;
+    }
+
+    .mini a:hover { border-color: var(--accent); }
+
+    .mini strong {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.18rem;
+    }
+
+    .mini span {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .social {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+    }
+
+    .social a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+    }
+
+    .social a:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .cmd {
+      margin-top: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0f141b;
+      color: var(--accent);
+      padding: 0.68rem 0.75rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      font-size: 0.9rem;
+    }
+
+    @keyframes rise {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (min-width: 780px) {
+      .cards { grid-template-columns: 1fr 1fr; }
+      .mini { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .top, .shell, .hero, .section { padding-left: 1.35rem; padding-right: 1.35rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid" aria-hidden="true"></div>
+  <main>
+    <div class="top">tappunk.com :: unix-first tooling for local ai</div>
+    <div class="shell">tappunk@host:~$ ./build-local-ai-stack --strict-posix --zero-trust</div>
+
+    <section class="hero">
+      <h1>Small interfaces. Hard guarantees.</h1>
+      <p class="lead">
+        Low-level tools for local AI on Apple Silicon: script-first CLIs, stable output contracts,
+        and isolated execution paths you can inspect end to end.
+      </p>
+      <div class="tags" aria-label="focus areas">
+        <span class="tag">unix / posix</span>
+        <span class="tag">local ai</span>
+        <span class="tag">openai-compatible api</span>
+        <span class="tag">container sandboxing</span>
+      </div>
+      <div class="cmd">$ muthr engine start --profile mlxcel/quality-qwen3.6-35b-a3b-4bit.ini</div>
+    </section>
+
+    <section class="section">
+      <p class="kicker">primary projects</p>
+      <div class="cards">
+        <a class="card" href="https://github.com/tappunk/muthr">
+          <span class="title">muthr</span>
+          <p class="desc">
+            Zero-trust orchestrator for mlxcel inference, per-project containers, and MCP routing.
+            Built for POSIX shells and automation agents.
+          </p>
+        </a>
+        <a class="card" href="https://github.com/tappunk/muthr-specs">
+          <span class="title">muthr-specs</span>
+          <p class="desc">
+            Runtime profiles, manifests, and provision scripts that define how muthr environments are
+            deployed and reproduced.
+          </p>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="kicker">toolchain</p>
+      <div class="mini">
+        <a href="https://github.com/tappunk/gre"><strong>gre</strong><span>parallel git status</span></a>
+        <a href="https://github.com/tappunk/gsty"><strong>gsty</strong><span>ghostty theme tui</span></a>
+        <a href="https://github.com/tappunk/utmd"><strong>utmd</strong><span>utm vm lifecycle</span></a>
+        <a href="https://github.com/tappunk"><strong>github</strong><span>all repositories</span></a>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="kicker">links</p>
+      <div class="social">
+        <a href="https://github.com/tappunk">github.com/tappunk</a>
+        <a href="https://x.com/tappunk">x.com/tappunk</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
