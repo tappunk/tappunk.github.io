@@ -1,0 +1,14 @@
+{
+  "name": "tappunk-homepage",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev site --host 0.0.0.0 --port 4173",
+    "docs:build": "vitepress build site",
+    "docs:preview": "vitepress preview site --host 0.0.0.0 --port 4174",
+    "site:publish": "pnpm docs:build && rsync -a --delete --exclude '.git/' --exclude '.config/' --exclude '.opencode/' --exclude '.DS_Store' --exclude 'node_modules/' --exclude 'site/' --exclude 'package.json' --exclude 'pnpm-lock.yaml' --exclude 'pnpm-workspace.yaml' --exclude '.gitignore' --exclude 'README.md' site/.vitepress/dist/ ./"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.3"
+  }
+}
