@@ -1,0 +1,129 @@
+:root {
+  --vp-c-bg: #0f0b06;
+  --vp-c-bg-soft: #171108;
+  --vp-c-bg-alt: #130d06;
+  --vp-c-border: #3e2b12;
+  --vp-c-divider: #2f200e;
+  --vp-c-text-1: #ffdca8;
+  --vp-c-text-2: #d2a96f;
+  --vp-c-text-3: #9d7748;
+  --vp-c-brand-1: #ffbf5e;
+  --vp-c-brand-2: #ffd990;
+  --vp-c-brand-3: #ffab3d;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(130deg, #ffcc76 0%, #ff9d2f 100%);
+  --vp-home-hero-image-background-image: radial-gradient(circle at 30% 40%, rgba(255, 191, 94, 0.35), transparent 52%),
+    radial-gradient(circle at 70% 60%, rgba(255, 153, 46, 0.2), transparent 54%);
+  --vp-home-hero-image-filter: blur(52px);
+}
+
+.Layout {
+  background-image:
+    radial-gradient(1100px 520px at 12% -12%, rgba(255, 191, 94, 0.15), transparent 60%),
+    radial-gradient(900px 500px at 86% -8%, rgba(255, 144, 36, 0.11), transparent 58%);
+}
+
+.VPHero .name,
+.VPHero .text {
+  letter-spacing: -0.02em;
+}
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.VPHero .name,
+.VPHero .text {
+  font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.vp-doc,
+.VPNav,
+.VPFooter,
+.VPHome {
+  font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
+}
+
+.vp-doc a,
+.VPNav a,
+.VPHero .action {
+  transition: color 0.22s ease, border-color 0.22s ease, background-color 0.22s ease,
+    transform 0.22s ease;
+}
+
+.VPHero .actions .VPButton:hover {
+  transform: translateY(-1px);
+}
+
+.VPHero.has-image .image-container {
+  border-radius: 50%;
+  border: 1px solid rgba(255, 191, 94, 0.4);
+  background: radial-gradient(circle at 30% 25%, rgba(255, 191, 94, 0.14), rgba(18, 12, 5, 0.55));
+  padding: 0.35rem;
+  box-shadow: 0 0 0 1px rgba(255, 153, 46, 0.2), 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+.VPHero.has-image .image-src {
+  border-radius: 50%;
+  width: min(300px, 62vw);
+  height: auto;
+  filter: saturate(1.02) contrast(1.02);
+}
+
+@media (max-width: 960px) {
+  .VPHero.has-image .image-src {
+    width: min(230px, 58vw);
+  }
+}
+
+.VPFeature {
+  border: 1px solid var(--vp-c-border);
+  background: linear-gradient(180deg, rgba(255, 191, 94, 0.045), rgba(255, 191, 94, 0));
+}
+
+.VPNavBar {
+  backdrop-filter: blur(8px);
+  background: rgba(12, 8, 4, 0.84);
+}
+
+.signature-strip {
+  margin: 1.2rem 0 1.8rem;
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 191, 94, 0.055), rgba(255, 191, 94, 0));
+}
+
+.signature-label {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-3);
+}
+
+.signature-text {
+  margin: 0.42rem 0 0;
+  font-size: 0.95rem;
+  color: var(--vp-c-text-1);
+}
+
+.signature-links {
+  margin: 0.55rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.52rem;
+  align-items: center;
+  color: var(--vp-c-text-2);
+  font-size: 0.84rem;
+}
+
+.signature-links a {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255, 191, 94, 0.45);
+}
+
+.signature-links a:hover {
+  color: var(--vp-c-brand-2);
+  border-bottom-color: rgba(255, 217, 144, 0.62);
+}
