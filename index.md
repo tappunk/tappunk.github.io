@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: tappunk
-  tagline: experiments in AI and independent computing
+  tagline: experiments in independent computing
   image:
     src: /hero.webp
     alt: Richal Aleman
@@ -35,7 +35,7 @@ tnk init && tnk run
 
 ## About
 
-Building tools for independent computing: local AI, sandboxed inference, and self-hosted infrastructure.
+Software, experiments, and notes.
 
 - [github.com/richalaleman](https://github.com/richalaleman)
 - [x.com/richalaleman](https://x.com/richalaleman)
