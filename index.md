@@ -3,7 +3,8 @@ layout: home
 
 hero:
   name: tappunk
-  tagline: experiments in independent computing
+  text: Richal Aleman
+  tagline: Software, experiments, and notes.
   image:
     src: /hero.webp
     alt: Richal Aleman
@@ -13,7 +14,10 @@ hero:
       link: /tnk/
     - theme: alt
       text: GitHub
-      link: https://github.com/tappunk/tnk
+      link: https://github.com/tappunk
+    - theme: alt
+      text: X
+      link: https://x.com/tappunk
 ---
 
 ## Experiments
@@ -32,10 +36,3 @@ tnk init && tnk run
 ```
 
 [Quickstart →](/tnk/quickstart) · [All projects →](/projects/)
-
-## About
-
-Software, experiments, and notes.
-
-- [github.com/tappunk](https://github.com/tappunk)
-- [x.com/tappunk](https://x.com/tappunk)
