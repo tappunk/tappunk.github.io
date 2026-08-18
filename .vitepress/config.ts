@@ -40,7 +40,7 @@ export default defineConfig({
     ],
     socialLinks: [
       { icon: "github", link: "https://github.com/tappunk" },
-      { icon: "x", link: "https://x.com/richalaleman" }
+      { icon: "x", link: "https://x.com/tappunk" }
     ],
     footer: {
       message: "richal@tappunk.com",

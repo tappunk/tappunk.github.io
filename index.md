@@ -37,5 +37,5 @@ tnk init && tnk run
 
 Software, experiments, and notes.
 
-- [github.com/richalaleman](https://github.com/richalaleman)
-- [x.com/richalaleman](https://x.com/richalaleman)
+- [github.com/tappunk](https://github.com/tappunk)
+- [x.com/tappunk](https://x.com/tappunk)
