@@ -43,7 +43,7 @@ export default defineConfig({
       { icon: "x", link: "https://x.com/tappunk" }
     ],
     footer: {
-      message: "richal@tappunk.com",
+      message: "me@tappunk.com",
       copyright: ""
     },
     search: {
