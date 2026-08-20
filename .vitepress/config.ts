@@ -42,10 +42,6 @@ export default defineConfig({
       { icon: "github", link: "https://github.com/tappunk" },
       { icon: "x", link: "https://x.com/tappunk" }
     ],
-    footer: {
-      message: "me@tappunk.com",
-      copyright: ""
-    },
     search: {
       provider: "local"
     }

@@ -18,6 +18,9 @@ hero:
     - theme: alt
       text: X
       link: https://x.com/tappunk
+    - theme: alt
+      text: Email
+      link: mailto:me@tappunk.com
 ---
 
 ## Experiments
