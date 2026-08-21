@@ -4,7 +4,7 @@ layout: home
 hero:
   name: tappunk
   text: Richal Aleman
-  tagline: Software, experiments, and notes.
+  tagline: Nothing you value belongs in the cloud.
   image:
     src: /hero.webp
     alt: Richal Aleman
