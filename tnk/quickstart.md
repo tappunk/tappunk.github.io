@@ -47,7 +47,7 @@ tnk doctor
 tnk download bartowski/Qwen_Qwen3.5-9B-GGUF
 ```
 
-Downloads from Hugging Face Hub to `model_dir` (default `~/opt/models`).
+Downloads from Hugging Face Hub to `model_dir` (default `~/models`).
 
 ## 6) Shutdown cleanly
 

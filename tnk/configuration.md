@@ -8,7 +8,7 @@ Primary config file:
 
 - `server_port` - inference API port (default `8080`)
 - `workspace_root` - project root for sandbox mapping (default `~/code`)
-- `model_dir` - base model directory (default `~/opt/models`)
+- `model_dir` - base model directory (default `~/models`)
 - `default_provision_profile` - sandbox profile default (`pi`)
 - `default_engine_runtime` - inference runtime (`llama`)
 - `default_engine_bind_host` - host bind (`127.0.0.1` default)
@@ -24,7 +24,7 @@ server_port = 8080
 workspace_root = "~/code"
 
 # Base directory for local model files
-model_dir = "~/opt/models"
+model_dir = "~/models"
 
 # Default sandbox profile
 default_provision_profile = "pi"
