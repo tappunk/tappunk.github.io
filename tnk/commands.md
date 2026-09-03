@@ -2,54 +2,14 @@
 
 ## Top-level
 
-- `tnk`: show engine status
-- `tnk engine`: inference engine
+- `tnk`: list sandboxes
+- `tnk run`: start project sandbox
+- `tnk shutdown`: stop all sandboxes
 - `tnk sandbox`: project sandboxes
-- `tnk run`: start runtime
-- `tnk shutdown`: shutdown
-- `tnk completion`: shell completions
-- `tnk init`: init
+- `tnk init`: install config from tnk-specs
 - `tnk config`: config
+- `tnk completion`: shell completions
 - `tnk doctor`: diagnostics
-- `tnk download`: download models
-
-## Engine
-
-### Start
-
-```bash
-tnk engine start --preset PRESET --runtime RUNTIME [--bind-host HOST] [--engine-server-port PORT] [--foreground]
-```
-
-Key flags:
-
-- `--runtime` engine runtime (`llama`)
-- `--preset` preset name (must match a `.ini` file in `provider.d/`)
-- `--bind-host` server bind address (`127.0.0.1` default)
-- `--engine-server-port` override API port
-- `--foreground` run in foreground (blocking mode) instead of as a background daemon
-
-### Stop
-
-```bash
-tnk engine stop [--runtime RUNTIME] [--all]
-```
-
-Default runtime is `llama`. `--all` stops every running engine regardless of runtime.
-
-### Status
-
-```bash
-tnk engine status --output text|json|ndjson
-```
-
-### Presets
-
-```bash
-tnk engine presets --runtime RUNTIME --output text|json|ndjson [--strict]
-```
-
-Lists configured model presets from `provider.d/`. Use `--strict` to show only presets with an explicit `runtime` field matching the selected engine.
 
 ## Sandbox
 
@@ -72,6 +32,7 @@ Flags:
 - `-c, --command` execute a non-interactive command instead of opening a login shell
 - `--no-tty` bypass TTY requirements for automation
 - `-e, --env` add environment variables in `KEY=VALUE` form (repeatable)
+- `--profile` apply a provision profile before the session
 
 ### Stop
 
@@ -79,20 +40,20 @@ Flags:
 tnk sandbox stop [--all] [--name SANDBOX ...]
 ```
 
-`--all` and `--name` are mutually exclusive.
+`--all` and `--name` are mutually exclusive. Without flags, stops the sandbox for the current project directory.
 
 ### Delete
 
 ```bash
-tnk sandbox delete [--yes] [--dry-run]
+tnk sandbox delete [--yes] [-n|--dry-run]
 ```
 
-Targets the sandbox for the current project directory. `-n, --dry-run` previews the action without side effects. `-y, --yes` skips the confirmation prompt.
+Targets the sandbox for the current project directory. `-n, --dry-run` previews the action without side effects. `-y, --yes` skips the terminal requirement.
 
 ### List
 
 ```bash
-tnk sandbox ls [--output text|json|ndjson] [--quiet]
+tnk sandbox ls [--output text|json|ndjson] [-q|--quiet]
 ```
 
 `--quiet` outputs only sandbox names, one per line.
@@ -100,34 +61,18 @@ tnk sandbox ls [--output text|json|ndjson] [--quiet]
 ## Run / shutdown
 
 ```bash
-tnk run [--preset PRESET] [--runtime RUNTIME] [--dry-run]
-tnk shutdown [--timeout SECONDS] [--dry-run]
+tnk run [--profile PROFILE] [--audit-log PATH] [--shell] [-n|--dry-run]
+tnk shutdown [--timeout SECONDS] [-n|--dry-run]
 ```
 
-`tnk run` boots the inference engine. `tnk shutdown` stops sandboxes and engine. Use `--timeout` to set the per-component grace period (default 30 seconds).
-
-## Download
-
-```bash
-tnk download URL [--output text|json|ndjson] [--dry-run] [--revision REV] [--workers N] [--force]
-```
-
-Download models from Hugging Face Hub. Accepts `hf://` URIs, full URLs, or plain repo IDs (`namespace/name`). Models download to `model_dir` from `tnk.toml`.
-
-Flags:
-
-- `--output` output format (`text`, `json`, `ndjson`)
-- `--dry-run` preview files without downloading
-- `--revision` custom revision (branch, tag, or commit)
-- `--workers` maximum concurrent downloads (default 4)
-- `--force` overwrite existing files even if sizes match
+`tnk run` boots the project sandbox (and provisions the default profile on first use). `tnk shutdown` stops every managed sandbox, escalating from a graceful stop to a forced one. `--timeout` sets the graceful-stop grace period (default 60 seconds).
 
 ## Global flags
 
 `--quiet` (`-q`) and `--verbose` (`-v`) are available on all commands:
 
 - `-q` suppresses non-error informational output
-- `-v` shows detailed operational logs
+- `-v` shows detailed operational logs (and passes lima output through live during VM creation)
 
 ## Config / init / doctor
 
@@ -137,6 +82,10 @@ tnk config init [--force]
 tnk config show
 tnk doctor
 ```
+
+- `tnk init` installs `~/.config/tnk/` from tnk-specs (clones the repo, or copies from a local path). `--force` re-syncs the managed `sandbox.d/` directory over existing content.
+- `tnk config show` prints the resolved config.
+- `tnk doctor` checks config resolution, the runtime cache directory, and managed lima instances.
 
 ## Output contract
 

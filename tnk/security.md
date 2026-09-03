@@ -21,15 +21,15 @@ tnk limits failures to the sandbox VM.
 
 ### Supply-chain containment
 
-Profiles install package ecosystems inside sandbox boundaries. A bad package impacts the sandbox first, not your host root.
+Profiles install package ecosystems inside sandbox boundaries. A bad package impacts the sandbox first, not your host.
 
 ### Predictable teardown
 
-`tnk shutdown` and lifecycle subcommands stop and reset all managed components.
+`tnk shutdown` and lifecycle subcommands stop all managed sandboxes.
 
 ### Scriptability and verification
 
-JSON/NDJSON output and deterministic command shape let operators implement policy checks in shell tooling.
+JSON/NDJSON output and a deterministic command shape let operators implement policy checks in shell tooling.
 
 ### Residual risk
 
@@ -37,7 +37,7 @@ tnk does not make agents safe by default. The following actions create attack su
 
 - Mounting sensitive files (private keys, `.env` files) into a sandbox
 - Executing untrusted binaries manually inside a sandbox
-- Overriding safe defaults (`bind_host`, `workspace_root`)
+- Overriding safe defaults (`workspace_root`)
 - Running sandboxes with elevated privileges
 
 Use `--audit-log` for any session where you need a record of what happened inside the sandbox.
@@ -57,8 +57,8 @@ tnk provides Lima VM-backed isolation using Apple Virtualization framework (`vz`
 
 ## Limits
 
-tnk contains agent execution. It cannot inspect agent reasoning, validate generated code for logic errors, or prevent social engineering inside the sandbox. Agents with valid credentials can still exfiltrate data through allowed network paths. Use `--audit-log` and least-privilege profiles to mitigate.
+tnk contains agent execution. It cannot inspect agent reasoning, validate generated code for logic errors, or prevent social engineering inside the sandbox. Agents with valid credentials can still exfiltrate data through allowed network paths. Use `--audit-log` and least-privilege provisioning to mitigate.
 
 ---
 
-**See also:** [Concepts](/tnk/concepts) · [Sandbox](/tnk/sandbox) · [Configuration](/tnk/configuration)
+**See also:** [Concepts](/tnk/concepts) · [Sandboxing](/tnk/sandbox) · [Configuration](/tnk/configuration)

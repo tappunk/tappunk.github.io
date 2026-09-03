@@ -9,22 +9,39 @@ tnk init --force
 tnk sandbox shell --profile pi --no-tty --command "command -v pi || true"
 ```
 
+Provision runs are skipped when the fingerprint is unchanged. To force a re-provision, clear the tracking token inside the guest:
+
+```bash
+tnk sandbox shell --no-tty -c "rm -f ~/.local/state/tnk/provision.lock"
+tnk sandbox shell --profile pi --no-tty --command "command -v pi || true"
+```
+
 ## Sandbox cannot reach inference API
 
-Validate host bind and endpoints:
+Check the host endpoint and the config:
 
 ```bash
 tnk config show
-tnk engine status
+curl -s http://127.0.0.1:9931/health
 ```
 
-The sandbox connects to the inference engine at `host.lima.internal:{port}` inside the VM.
+The sandbox connects to the inference server at `host.lima.internal:<server_port>` inside the VM. From within a sandbox:
+
+```bash
+tnk sandbox shell --no-tty -c "curl -s http://host.lima.internal:9931/v1/models"
+```
+
+If the host endpoint fails, the problem is your inference server, not tnk.
+
+## `no model configured` error
+
+Profiled commands require `default_model` in `~/.config/tnk/tnk.toml` (or `TNK_MODEL` in the environment). Set it to the model name your host inference server serves.
 
 ## Running from wrong directory/context
 
 tnk sandbox commands require project context under `workspace_root`.
 
-If you are outside that root, tnk exits with usage-context errors.
+If you are outside that root, tnk exits with a usage error. Set `workspace_root` (or `TNK_WORKSPACE_ROOT`) to the directory containing your projects.
 
 ## Sandbox cleanup
 
@@ -41,48 +58,20 @@ Delete uses current project context:
 cd ~/code/project-a && tnk sandbox delete --yes
 ```
 
-## Engine/process drift
-
-```bash
-tnk engine stop --all
-tnk engine start --runtime llama
-```
-
-## Reading inference server logs
-
-Logs live in `~/.cache/tnk/`:
-
-```bash
-# View the last 100 lines
-tail -n 100 ~/.cache/tnk/llama-server.log
-
-# Follow live output
-tail -f ~/.cache/tnk/llama-server.log
-
-# Check error log separately
-tail -n 100 ~/.cache/tnk/llama-server-err.log
-```
-
-## Inference server unreachable from sandbox
-
-The sandbox connects to `host.lima.internal` (Lima's internal gateway). Check:
-
-```bash
-tnk config show | grep bind_host
-tnk sandbox shell --no-tty -c "curl -s http://host.lima.internal:8080/health"
-```
-
-If the engine isn't listening, restart it with `tnk engine stop` followed by `tnk engine start --runtime llama`.
-
 ## Profile provisioning hangs
 
-Provisioning hangs from unreachable package mirrors or a misconfigured host gateway.
+Provisioning hangs on unreachable package mirrors or a broken VM network.
 
 ```bash
-tnk sandbox shell --profile pi --no-tty --command "ping -c 3 github.com"
+tnk sandbox shell --no-tty -c "ping -c 3 github.com"
 ```
 
-If DNS fails, the VM network is broken. Try `tnk init --force` to regenerate configs.
+If DNS fails, the VM network is broken. Check lima state with `limactl list` and restart the instance:
+
+```bash
+tnk sandbox stop
+limactl delete --force tnk-<project>
+```
 
 ## Pre-flight diagnostics
 
@@ -92,4 +81,4 @@ tnk doctor
 
 ---
 
-**See also:** [Installation](/tnk/installation) · [Configuration](/tnk/configuration) · [Security](/tnk/security)
+**See also:** [Installation](/tnk/installation) · [Configuration](/tnk/configuration) · [Sandboxing](/tnk/sandbox)

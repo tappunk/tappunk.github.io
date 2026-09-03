@@ -25,6 +25,7 @@ export default defineConfig({
           { text: "Installation", link: "/tnk/installation" },
           { text: "Commands", link: "/tnk/commands" },
           { text: "Configuration", link: "/tnk/configuration" },
+          { text: "Profiles", link: "/tnk/profiles" },
           { text: "Sandboxing", link: "/tnk/sandbox" },
           { text: "Security", link: "/tnk/security" },
           { text: "Concepts", link: "/tnk/concepts" },

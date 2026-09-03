@@ -1,20 +1,12 @@
 # Concepts
 
-## The two planes
+## One plane
 
-tnk manages two runtime planes, each with its own lifecycle and CLI namespace.
+tnk manages one runtime plane: per-project sandboxes, with the `tnk sandbox` command family.
 
-### Engine plane
+The inference engine runs on the host and is yours to manage. tnk expects an OpenAI-compatible server listening on `server_port` and passes its coordinates to sandboxes. It does not start, stop, download, or inspect the engine.
 
-The inference engine runs on the host. tnk starts, stops, and queries it with `tnk engine`.
-
-The default and production runtime is `llama` (llama.cpp server). The engine serves an OpenAI-compatible API that sandboxes connect over the network.
-
-Use `tnk engine status` to check if the engine is running, `tnk engine start` to launch it, and `tnk engine stop` to shut it down.
-
-### Sandbox plane
-
-Per-project sandboxes managed with `tnk sandbox`. Sandboxes use Lima VMs (Ubuntu, Virtualization framework) for lightweight, reproducible isolation.
+Sandboxes use Lima VMs (Ubuntu, Apple Virtualization framework) for lightweight, reproducible isolation.
 
 Each sandbox mounts only the project directory. Your home folder stays out of scope.
 
@@ -49,10 +41,9 @@ tnk injects environment variables into every sandbox session. Agents read these 
 
 | Variable | Points to |
 |----------|-----------|
-| `TNK_INFERENCE_URL` | Engine inference API (`http://host.lima.internal:8080/v1`) |
-| `TNK_OPENAI_URL` | Alias for `TNK_INFERENCE_URL` |
-| `TNK_MODEL_NAME` | Current model identifier |
-| `TNK_ENGINE_RUNTIME` | Active runtime name (`llama`) |
+| `TNK_INFERENCE_URL` | Inference API (`http://host.lima.internal:<server_port>/v1`) |
+| `TNK_MODEL_NAME` | Model identifier from `default_model` |
+| `TNK_ENGINE_RUNTIME` | Runtime name (`llama`) |
 
 Variables are explicit. Agents cannot reach services they are not told about.
 
@@ -62,22 +53,22 @@ Profiles configure sandbox environments. The flow:
 
 1. tnk checks whether a sandbox VM exists for the current project
 2. It copies the profile provision script and shared library into the VM
-3. It injects the runtime env contract
+3. It injects the provision-time env contract (the runtime contract plus `TNK_CTX_WINDOW`, `TNK_WORKSPACE_MOUNT`, `TNK_SPECS_REV`)
 4. It runs the provision script inside the sandbox
 
-Provision state gets a fingerprint from `TNK_SPECS_REV`. If the fingerprint has not changed, tnk skips reinstallation.
+Provision state gets a fingerprint from the profile name, the deployed specs revision, and the injected runtime values (endpoint, model, context window, mount path, runtime key). If the fingerprint has not changed, the provision run is skipped.
 
-All provision scripts run with `set -Eeuo pipefail` and `umask 077`. A trap handler drops tracking tokens on unexpected termination so failed provisions don't leave stale fingerprints.
+All provision scripts run with `set -Eeuo pipefail` and `umask 077`. A trap handler drops the tracking token on unexpected termination so failed provisions don't leave stale fingerprints.
 
 ### tnk-specs
 
-[tappunk/tnk-specs](https://github.com/tappunk/tnk-specs) hosts sandbox profiles and engine presets. `tnk init` clones this repository into `~/.config/tnk/` on your host.
+[tappunk/tnk-specs](https://github.com/tappunk/tnk-specs) hosts the config template and sandbox assets. `tnk init` clones this repository into `~/.config/tnk/` on your host.
 
 The repository contains:
 
+- **Config template**: `tnk.toml` installed as the base of `~/.config/tnk/`
 - **Sandbox manifests**: per-profile YAML definitions under `sandbox.d/manifests/`
 - **Provision scripts**: setup automation under `sandbox.d/provision.d/`
-- **Model presets**: engine model INI files under `provider.d/`
 - **Shared library**: `sandbox.d/provision.d/lib/provision-lib.sh`
 
 You can point `tnk init` at a fork or custom specs repository:
@@ -86,26 +77,16 @@ You can point `tnk init` at a fork or custom specs repository:
 tnk init --git-url https://github.com/your-org/tnk-specs.git
 ```
 
-`tnk init --force` overwrites the three managed directories (`clients/`, `sandbox.d/`, `provider.d/`) with fresh content from upstream. It leaves `tnk.toml` and other user files intact.
+`tnk init --force` re-syncs the managed `sandbox.d/` directory with fresh content from the specs source. It leaves `tnk.toml` and other user files intact.
 
-Profiles encode resource requirements (CPUs, memory), security posture (network policy), and provisioning steps. Resource values come from the manifest YAML.
-
-### Model presets
-
-Model presets live in `provider.d/` and define which model file and extra flags the inference engine uses. Each preset is an INI file. Presets get updated when you run `tnk init` against a newer tnk-specs revision.
-
-The `llama` runtime uses GGUF models. The preset controls model selection, context size, GPU offload, and threading parameters. The default preset (`llama-default`) ships with Qwen3.5-9B.
-
-## Engine design
-
-tnk ships with `llama` (llama.cpp server) as the default inference runtime. GGUF provides broad model availability across HuggingFace and other model repositories.
+Profiles encode resource requirements (CPUs, memory), mount configuration, and provisioning steps. Resource values come from the manifest YAML.
 
 ## Audit logs
 
 Every `sandbox start` and `sandbox shell` session can record an audit trail with `--audit-log PATH`. Each entry is NDJSON and includes:
 
 - session start and exit timestamps
-- command argv (for non-TTY sessions)
+- exec invocation argv
 - TTY mode flag
 - runtime env summary
 

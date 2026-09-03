@@ -1,6 +1,6 @@
 # tnk (experimental)
 
-tnk is a zero-trust sandbox for local inference and AI agent runtimes. It manages the inference engine on the host and per-project Lima sandboxes with isolated execution environments.
+tnk manages per-project sandbox VMs for AI agent runtimes. Each project gets its own Lima VM that mounts only the project directory. The inference engine runs on the host and is managed outside of tnk; sandboxes reach it over the Lima virtual network.
 
 <img src="./assets/index-hero.gif" alt="tnk CLI demo" width="100%" />
 
@@ -24,16 +24,16 @@ tnk reduces that risk through enforced boundaries:
 
 ## Core model
 
-1. **Host inference engine**: managed by `tnk engine`
-2. **Per-project sandbox**: Lima VMs for isolated execution, managed by `tnk sandbox`
+1. **Host inference engine**: an OpenAI-compatible server you run and own (for example, `llama-server`). tnk never starts, stops, or inspects it.
+2. **Per-project sandbox**: a Lima VM for isolated execution, managed by `tnk sandbox`.
 
-The default path is `tnk run`: it boots the inference engine, then you enter project sandboxes as needed.
+The default path is `tnk run`: it boots the project sandbox, then you enter it with `tnk sandbox shell`.
 
 ## Read next
 
 1. [Quickstart](/tnk/quickstart)
 2. [Commands](/tnk/commands)
-3. [Sandbox](/tnk/sandbox)
+3. [Sandboxing](/tnk/sandbox)
 4. [Security](/tnk/security)
 5. [Configuration](/tnk/configuration)
 

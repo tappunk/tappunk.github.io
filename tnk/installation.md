@@ -3,8 +3,10 @@
 ## Requirements
 
 - Apple Silicon macOS
-- **Homebrew install**: `lima` and `llama.cpp` are pulled in automatically by the formula
-- **Cargo install**: install manually: `brew install lima llama.cpp`
+- Homebrew
+- **Homebrew install**: `lima` is pulled in automatically by the formula
+- **Cargo install**: install manually with `brew install lima`
+- An OpenAI-compatible inference server on the host (tnk does not manage the engine)
 
 Validate prerequisites:
 
@@ -18,6 +20,7 @@ tnk doctor
 
 ```bash
 brew tap tappunk/tap
+brew trust tappunk/tap            # required on recent Homebrew versions
 brew install tappunk/tap/tnk
 ```
 
@@ -34,6 +37,8 @@ tnk init
 tnk config init
 ```
 
+`tnk init` clones [tnk-specs](https://github.com/tappunk/tnk-specs) into `~/.config/tnk/`. `tnk config init` creates `~/.config/tnk/tnk.toml` only if it is missing.
+
 Inspect effective config:
 
 ```bash
@@ -45,11 +50,4 @@ tnk config show
 For safer project scoping:
 
 - `workspace_root = "~/code"` (never `$HOME`)
-
-For turnkey profile usage:
-
-- `default_provision_profile = "pi"`
-
----
-
-**See also:** [Configuration](/tnk/configuration) · [Quickstart](/tnk/quickstart) · [Troubleshooting](/tnk/troubleshooting)
+- `default_model` set to a model your host inference server actually serves
