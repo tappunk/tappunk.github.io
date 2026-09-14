@@ -1,0 +1,203 @@
+:root {
+  --color-bg: #faf5ec;
+  --color-border: #c4a87a;
+  --color-text-1: #3d2f1a;
+  --color-text-2: #6b5530;
+  --color-text-3: #8a7550;
+  --color-brand: #cc8800;
+  --color-brand-hover: #e69900;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f0b06;
+    --color-border: #3e2b12;
+    --color-text-1: #ffdca8;
+    --color-text-2: #d2a96f;
+    --color-text-3: #9d7748;
+    --color-brand: #ffbf5e;
+    --color-brand-hover: #ffd990;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background-color: var(--color-bg);
+  color: var(--color-text-1);
+  font-family: "Schibsted Grotesk", "Manrope", "Avenir Next", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.profile {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 4rem 1.5rem;
+  text-align: center;
+  background-image:
+    radial-gradient(1100px 520px at 12% -12%, rgba(255, 191, 94, 0.15), transparent 60%),
+    radial-gradient(900px 500px at 86% -8%, rgba(255, 144, 36, 0.11), transparent 58%);
+}
+
+.profile .avatar {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(204, 136, 0, 0.4);
+  background: radial-gradient(circle at 30% 25%, rgba(204, 136, 0, 0.1), rgba(250, 245, 236, 0.5));
+  box-shadow: 0 0 0 4px rgba(204, 136, 0, 0.12), 0 12px 30px rgba(0, 0, 0, 0.12);
+  margin-bottom: 1.4rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .profile .avatar {
+    background: radial-gradient(circle at 30% 25%, rgba(255, 191, 94, 0.14), rgba(18, 12, 5, 0.55));
+    border-color: rgba(255, 153, 46, 0.35);
+    box-shadow: 0 0 0 4px rgba(255, 153, 46, 0.1), 0 20px 40px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.profile .profile-name {
+  margin: 0;
+  font-family: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  font-size: clamp(3.2rem, 9vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--color-text-1);
+}
+
+.profile .profile-real {
+  margin: 0.3rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+
+.profile .profile-bio {
+  margin: 1.1rem 0 0;
+  max-width: 34ch;
+  font-size: 1.06rem;
+  line-height: 1.55;
+  color: var(--color-text-2);
+}
+
+.profile .social-row {
+  margin-top: 1.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.15rem;
+}
+
+.profile .social-row a {
+  display: inline-flex;
+  color: var(--color-text-1);
+  opacity: 0.85;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.profile .social-row a:hover {
+  transform: translateY(-3px);
+  opacity: 1;
+}
+
+.profile .social-row a[aria-label="Email"] {
+  color: var(--color-text-2);
+}
+
+@keyframes profile-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile .rise {
+  animation: profile-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.profile .avatar {
+  animation-delay: 0ms;
+}
+
+.profile .profile-name {
+  animation-delay: 70ms;
+}
+
+.profile .profile-real {
+  animation-delay: 140ms;
+}
+
+.profile .profile-bio {
+  animation-delay: 210ms;
+}
+
+.profile .social-row {
+  animation-delay: 280ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile .rise {
+    animation: none;
+  }
+}
+
+.not-found {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  text-align: center;
+  background-image:
+    radial-gradient(1100px 520px at 12% -12%, rgba(255, 191, 94, 0.15), transparent 60%),
+    radial-gradient(900px 500px at 86% -8%, rgba(255, 144, 36, 0.11), transparent 58%);
+}
+
+.not-found .rat {
+  width: 256px;
+  height: 256px;
+  margin-bottom: 1.5rem;
+}
+
+.not-found p {
+  color: var(--color-text-2);
+  margin: 0 0 1.5rem;
+  font-size: 1.125rem;
+}
+
+.not-found a {
+  color: var(--color-brand);
+  text-decoration: none;
+  font-size: 1rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.not-found a:hover {
+  border-bottom-color: var(--color-brand);
+}
