@@ -124,7 +124,7 @@ body {
   color: var(--color-text-2);
 }
 
-@keyframes profile-rise {
+@keyframes rise-in {
   from {
     opacity: 0;
     transform: translateY(14px);
@@ -135,8 +135,8 @@ body {
   }
 }
 
-.profile .rise {
-  animation: profile-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+.rise {
+  animation: rise-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .profile .avatar {
@@ -160,9 +160,162 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .profile .rise {
+  .rise {
     animation: none;
   }
+}
+
+.site-nav {
+  margin-top: 2.4rem;
+}
+
+.site-nav a {
+  display: inline-block;
+  color: var(--color-text-3);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.site-nav a:hover {
+  color: var(--color-brand);
+  border-bottom-color: var(--color-brand);
+}
+
+.site-nav a span {
+  display: inline-block;
+  margin-left: 0.3rem;
+  transition: transform 0.2s ease;
+}
+
+.site-nav a:hover span {
+  transform: translateX(3px);
+}
+
+.tools {
+  min-height: 100svh;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  background-image:
+    radial-gradient(1100px 520px at 12% -12%, rgba(255, 191, 94, 0.15), transparent 60%),
+    radial-gradient(900px 500px at 86% -8%, rgba(255, 144, 36, 0.11), transparent 58%);
+}
+
+.tools .tools-back {
+  animation-delay: 0ms;
+}
+
+.tools .tools-title {
+  animation-delay: 60ms;
+}
+
+.tools .tools-intro {
+  animation-delay: 120ms;
+}
+
+.tools .tools-list {
+  animation-delay: 180ms;
+}
+
+.tools-back {
+  display: inline-block;
+  margin-bottom: 2.2rem;
+  color: var(--color-text-3);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.tools-back:hover {
+  color: var(--color-brand);
+}
+
+.tools-title {
+  margin: 0;
+  font-family: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  font-size: clamp(2.8rem, 8vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text-1);
+}
+
+.tools-intro {
+  margin: 0.8rem 0 0;
+  max-width: 46ch;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+
+.tools-list {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.entry {
+  border-left: 2px solid var(--color-border);
+  padding-left: 1.2rem;
+}
+
+.entry-head {
+  margin: 0 0 0.4rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+}
+
+.entry-head a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.entry-head a:hover {
+  border-bottom-color: var(--color-brand);
+}
+
+.entry-head a:first-of-type {
+  color: var(--color-text-1);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.entry-head a:last-of-type {
+  color: var(--color-brand);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.entry-head time {
+  margin-left: auto;
+  color: var(--color-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.entry > p:not(.entry-head) {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+
+.entry code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.86em;
+  background: rgba(204, 136, 0, 0.1);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.05em 0.35em;
 }
 
 .not-found {
